@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hourly Chart</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        #container {
+            width: 100%;
+            height: 360px;  /* Adjust if necessary */
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <div id="container"></div>
+    <script>
+        function drawChart(dataConfig) {
+            const res = dataConfig.data
+            Highcharts.chart('container', {
+                plotOptions: {
+                    series: {
+                        animation: false
+                    }
+                },
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Recommendation Trends',
+                },
+                xAxis: {
+                    categories: [res[0].period, res[1].period, res[2].period, res[3].period]
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                    text: '#Analysis'
+                    },
+                    stackLabels: {
+                    enabled: true
+                    }
+                },
+                plotOptions: {
+                    column: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true
+                    }
+                    }
+                },
+                series: [{
+                    type:'column',
+                    name: 'Strong Buy',
+                    data: [res[0].strongBuy, res[1].strongBuy, res[2].strongBuy, res[3].strongBuy],
+                    color: '#195f31',
+                }, {
+                    type:'column',
+                    name: 'Buy',
+                    data: [res[0].buy, res[1].buy, res[2].buy, res[3].buy],
+                    color: '#25af50',
+                }, {
+                    type:'column',
+                    name: 'Hold',
+                    data: [res[0].hold, res[1].hold, res[2].hold, res[3].hold],
+                    color: '#b07d27',
+                },{
+                    type:'column',
+                    name: 'Sell',
+                    data: [res[0].sell, res[1].sell, res[2].sell, res[3].sell],
+                    color: '#f05050',
+                },{
+                    type:'column',
+                    name: 'Strong Sell',
+                    data: [res[0].strongSell, res[1].strongSell, res[2].strongSell, res[3].strongSell],
+                    color: '#732828',
+                }]
+                });
+        }
+    </script>
+</body>
+</html>
